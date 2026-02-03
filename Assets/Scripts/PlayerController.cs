@@ -14,12 +14,16 @@ public class PlayerController : MonoBehaviour
     public event IntDelegate PointEarned;
     public event EmptyDelegate GameOver;
     public event EmptyDelegate PlayerFlapped;
+    void Start()
+    {
+        Locator.Instance.Player.GameOver += HandleGameOver;
+        Locator.Instance.Player.PlayerFlapped += HandlePlayerFlap;
+    }
     void Update()
     {
         if (Input.GetKeyDown("space") && !gameOver)
         {
             PlayerFlapped.Invoke();
-            rb.velocity = new Vector2(rb.velocity.x, flapForce);
         }
     }
 
@@ -28,7 +32,6 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Tube")
         {
             GameOver.Invoke();
-            gameOver = true;
         }
         else if (other.tag == "PointGate")
         {
@@ -36,4 +39,15 @@ public class PlayerController : MonoBehaviour
             PointEarned.Invoke(points);
         }
     }
+    
+    void HandlePlayerFlap()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, flapForce);
+    }
+
+    void HandleGameOver()
+    {
+        gameOver = true;
+    }
+    
 }
