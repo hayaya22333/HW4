@@ -10,15 +10,15 @@ public class PlayerController : MonoBehaviour
     public bool gameOver = false;
     public int points = 0;
     public delegate void EmptyDelegate();
-    //public delegate void IntDelegate(int x);
-    //public event IntDelegate PointEarned;
-    public event EmptyDelegate TubeCollided;
-    //public event EmptyDelegate PlayerFlapped;
+    public delegate void IntDelegate(int x);
+    public event IntDelegate PointEarned;
+    public event EmptyDelegate GameOver;
+    public event EmptyDelegate PlayerFlapped;
     void Update()
     {
         if (Input.GetKeyDown("space") && !gameOver)
         {
-            //PlayerFlapped.Invoke();
+            PlayerFlapped.Invoke();
             rb.velocity = new Vector2(rb.velocity.x, flapForce);
         }
     }
@@ -27,25 +27,13 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "Tube")
         {
-            TubeCollided.Invoke();
+            GameOver.Invoke();
             gameOver = true;
-            // Call game over event
-            // -destroy all tubes
-            // -play tube destroy sound
-            // - end player movement
         }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag == "PointGate")
+        else if (other.tag == "PointGate")
         {
             points += 1;
-            // PointEarned.Invoke(points);
-            // Call get point event
-            // point ++
-            // score display ++
-            // point sound
+            PointEarned.Invoke(points);
         }
     }
 }

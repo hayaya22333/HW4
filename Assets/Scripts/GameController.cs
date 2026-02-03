@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] AudioSource explode;
+    [SerializeField] AudioSource jump;
+    [SerializeField] AudioSource coin;
     void Start()
     {
-        
+        Locator.Instance.Player.GameOver += HandleGameOver;
+        Locator.Instance.Player.PlayerFlapped += HandleFlap;
+        Locator.Instance.Player.PointEarned += HandleGetPoint;
     }
 
-    // Update is called once per frame
-    void Update()
+    void HandleGameOver()
     {
-        
+        explode.Play();
+    }
+
+    void HandleGetPoint(int x)
+    {
+        coin.Play();
+    }
+
+    void HandleFlap()
+    {
+        jump.Play();
     }
 }

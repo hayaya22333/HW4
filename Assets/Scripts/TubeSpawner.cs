@@ -7,7 +7,7 @@ public class TubeSpawner : MonoBehaviour
 {
     [SerializeField] GameObject tubePrefab;
     [SerializeField] Transform _transform;
-    float timeInterval = 3f;
+    float timeInterval = 2f;
     float timer = 0f;
     float offset = 0;
 

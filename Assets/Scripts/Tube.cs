@@ -10,7 +10,7 @@ public class Tube : MonoBehaviour
     float speed = 1.5f;
     private void Start()
     {
-        Locator.Instance.Player.TubeCollided += HandlePlayerCollision;
+        Locator.Instance.Player.GameOver += HandlePlayerCollision;
     }
     void Update()
     {
